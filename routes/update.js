@@ -12,7 +12,7 @@ router.post('/', function(req, res, next) {
 
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + name + '/ideas/' + id)
+  const dbRef = firebase.database().ref('/' + name + '/' + id)
 
   let props = {}
 
