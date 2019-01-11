@@ -4,8 +4,6 @@ require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 
-const serviceAccount = require("../serviceAccountKey.json");
-
 firebase.initializeApp({
   credential: firebase.credential.cert({
     "private_key": process.env.FIREBASE_PRIVATE_KEY,
