@@ -1,0 +1,20 @@
+<form method="POST" id="form" action="/test/create">
+  Your name:  <input type="text" name="name" id="name" /><br />
+  Title: <input type="text" name="title" /><br />
+  Description: <textarea name="description"></textarea><br />
+</form>
+
+<button id="submit">Submit</button>
+
+<script>
+window.onload = function() {
+  document.getElementById("submit").onclick = function(e) {
+    e.preventDefault()
+    const form = document.getElementById("form")
+    form.submit()
+  }
+}
+
+
+
+</script>

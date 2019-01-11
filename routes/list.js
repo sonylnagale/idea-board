@@ -12,15 +12,28 @@ firebase.initializeApp({
   databaseURL: "https://idea-board-bd745.firebaseio.com"
 });
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  const dbRef = firebase.database().ref('/')
+/* GET individual page. */
+router.get('/:id', function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref('/' + req.params.id)
+
   dbRef.once('value').then(function(snapshot) {
     const contents = snapshot.val()
-    console.log(contents)
+    res.send(JSON.stringify(contents))
   })
+})
 
-  res.render('list', { title: 'Express' });
-});
+/* GET all records page. */
+router.get('/', function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref('/')
+
+  dbRef.once('value').then(function(snapshot) {
+    const contents = snapshot.val()
+    res.send(JSON.stringify(contents))
+  })
+})
 
 module.exports = router;
