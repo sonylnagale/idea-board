@@ -9,6 +9,8 @@ require('dotenv').config()
 const listRouter = require('./routes/list')
 const createRouter = require('./routes/create')
 const testRouter = require('./routes/test')
+const deleteRouter = require('./routes/delete')
+const updateRouter = require('./routes/update')
 
 const app = express()
 
@@ -25,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/list', listRouter)
 app.use('/create', createRouter)
 app.use('/test', testRouter)
+app.use('/delete', deleteRouter)
+app.use('/update', updateRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,5 +1,4 @@
 const firebase = require("firebase-admin")
-require('dotenv').config()
 const xssFilters = require('xss-filters')
 
 const express = require('express')
@@ -17,6 +16,8 @@ router.post('/:id', function(req, res, next) {
     description,
     title,
   })
+
+  res.sendStatus(200)
 })
 
 router.get('/', function(req, res, next) {
