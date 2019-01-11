@@ -1,4 +1,5 @@
 const firebase = require("firebase-admin");
+require('dotenv').config()
 
 const express = require('express');
 const router = express.Router();
@@ -6,7 +7,10 @@ const router = express.Router();
 const serviceAccount = require("../serviceAccountKey.json");
 
 firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
+  credential: firebase.credential.cert({
+    "private_key": process.env.FIREBASE_PRIVATE_KEY,
+    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
+  }),
   databaseURL: "https://idea-board-bd745.firebaseio.com"
 });
 
@@ -17,7 +21,7 @@ router.get('/', function(req, res, next) {
     const contents = snapshot.val()
     console.log(contents)
   })
-  
+
   res.render('list', { title: 'Express' });
 });
 
