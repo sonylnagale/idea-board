@@ -10,7 +10,7 @@ router.post('/create', function(req, res, next) {
         title = xssFilters.inHTMLData(req.body.title),
         id = xssFilters.inHTMLData(req.body.name)
   res.setHeader('Content-Type', 'application/json')
-  const dbRef = firebase.database().ref('/' + id  + '/ideas')
+  const dbRef = firebase.database().ref('/' + id  + '/')
 
   dbRef.push({
     description,
@@ -32,7 +32,7 @@ router.post('/delete', function(req, res, next) {
         name = xssFilters.inHTMLData(req.body.name)
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + name  + '/ideas/')
+  const dbRef = firebase.database().ref('/' + name  + '/')
 
   dbRef.child(id).remove()
 
@@ -51,7 +51,7 @@ router.post('/update', function(req, res, next) {
 
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + name + '/ideas/' + id)
+  const dbRef = firebase.database().ref('/' + name + '/' + id)
 
   let props = {}
 
