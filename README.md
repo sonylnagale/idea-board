@@ -24,10 +24,14 @@ The `/list` and `/list/:name` URLs will list all data (https://react-idea-board-
 The data is presented in JSON format in both cases, using Firebase IDs:
 
 _All Data_
+
+
 ![List All Data](./images/list.png)
 
 _User Data_
-![List Userr Data](./images/user.png)
+
+
+![List User Data](./images/user.png)
 
 ## Caveat
 
