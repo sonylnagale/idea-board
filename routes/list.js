@@ -6,7 +6,7 @@ const router = express.Router();
 
 firebase.initializeApp({
   credential: firebase.credential.cert({
-    "private_key": process.env.FIREBASE_PRIVATE_KEY,
+    "private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     "client_email": process.env.FIREBASE_CLIENT_EMAIL,
   }),
   databaseURL: "https://idea-board-bd745.firebaseio.com"
