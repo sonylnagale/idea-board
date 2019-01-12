@@ -21,7 +21,7 @@ router.get('/:id', function (req, res, next) {
   dbRef.once('value').then(function (snapshot) {
     if (snapshot.exists()) {
       const contents = snapshot.val()
-      Object.entries(contents).forEach(([ key, value ]) => {
+      Object.entries(contents.ideas).forEach(([ key, value ]) => {
         ideas.push({ id: key, 'description': value.description, 'title': value.title })
       })
 
