@@ -1,26 +1,26 @@
-const firebase = require("firebase-admin")
+const firebase = require('firebase-admin')
 const xssFilters = require('xss-filters')
 
 const express = require('express')
 const router = express.Router()
 
 /* GET individual page. */
-router.post('/:id', function(req, res, next) {
-  const description = xssFilters.inHTMLData(req.body.description),
-        title = xssFilters.inHTMLData(req.body.title)
+router.post('/:id', function (req, res, next) {
+  const description = xssFilters.inHTMLData(req.body.description)
+  const title = xssFilters.inHTMLData(req.body.title)
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + req.params.id  + '/ideas')
+  const dbRef = firebase.database().ref('/' + req.params.id + '/ideas')
 
   dbRef.push({
     description,
-    title,
+    title
   })
 
   res.sendStatus(200)
 })
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('create', {})
 })
 

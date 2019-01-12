@@ -1,14 +1,14 @@
-const firebase = require("firebase-admin")
+const firebase = require('firebase-admin')
 const xssFilters = require('xss-filters')
 
 const express = require('express')
 const router = express.Router()
 
-router.post('/', function(req, res, next) {
-  const description = xssFilters.inHTMLData(req.body.description),
-        title = xssFilters.inHTMLData(req.body.title),
-        name = xssFilters.inHTMLData(req.body.name),
-        id = xssFilters.inHTMLData(req.body.id)
+router.post('/', function (req, res, next) {
+  const description = xssFilters.inHTMLData(req.body.description)
+  const title = xssFilters.inHTMLData(req.body.title)
+  const name = xssFilters.inHTMLData(req.body.name)
+  const id = xssFilters.inHTMLData(req.body.id)
 
   res.setHeader('Content-Type', 'application/json')
 
@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
     props.description = description
   }
 
-  if (title  !== undefined) {
+  if (title !== undefined) {
     props.title = title
   }
 
@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
   res.sendStatus(200)
 })
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('create', {})
 })
 

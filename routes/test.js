@@ -1,53 +1,53 @@
-const firebase = require("firebase-admin")
+const firebase = require('firebase-admin')
 require('dotenv').config()
 const xssFilters = require('xss-filters')
 
 const express = require('express')
 const router = express.Router()
 
-router.post('/create', function(req, res, next) {
-  const description = xssFilters.inHTMLData(req.body.description),
-        title = xssFilters.inHTMLData(req.body.title),
-        id = xssFilters.inHTMLData(req.body.name)
+router.post('/create', function (req, res, next) {
+  const description = xssFilters.inHTMLData(req.body.description)
+  const title = xssFilters.inHTMLData(req.body.title)
+  const id = xssFilters.inHTMLData(req.body.name)
   res.setHeader('Content-Type', 'application/json')
-  const dbRef = firebase.database().ref('/' + id  + '/')
+  const dbRef = firebase.database().ref('/' + id + '/')
 
   dbRef.push({
     description,
-    title,
+    title
   })
   res.sendStatus(200)
 })
 
-router.get('/create', function(req, res, next) {
+router.get('/create', function (req, res, next) {
   res.render('testcreate', {})
 })
 
-router.get('/delete', function(req, res, next) {
+router.get('/delete', function (req, res, next) {
   res.render('testdelete', {})
 })
 
-router.post('/delete', function(req, res, next) {
-  const id = xssFilters.inHTMLData(req.body.id),
-        name = xssFilters.inHTMLData(req.body.name)
+router.post('/delete', function (req, res, next) {
+  const id = xssFilters.inHTMLData(req.body.id)
+  const name = xssFilters.inHTMLData(req.body.name)
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + name  + '/')
+  const dbRef = firebase.database().ref('/' + name + '/')
 
   dbRef.child(id).remove()
 
   res.sendStatus(200)
 })
 
-router.get('/update', function(req, res, next) {
+router.get('/update', function (req, res, next) {
   res.render('testupdate', {})
 })
 
-router.post('/update', function(req, res, next) {
-  const description = xssFilters.inHTMLData(req.body.description),
-        title = xssFilters.inHTMLData(req.body.title),
-        name = xssFilters.inHTMLData(req.body.name),
-        id = xssFilters.inHTMLData(req.body.id)
+router.post('/update', function (req, res, next) {
+  const description = xssFilters.inHTMLData(req.body.description)
+  const title = xssFilters.inHTMLData(req.body.title)
+  const name = xssFilters.inHTMLData(req.body.name)
+  const id = xssFilters.inHTMLData(req.body.id)
 
   res.setHeader('Content-Type', 'application/json')
 
@@ -59,7 +59,7 @@ router.post('/update', function(req, res, next) {
     props.description = description
   }
 
-  if (title  !== undefined) {
+  if (title !== undefined) {
     props.title = title
   }
 
