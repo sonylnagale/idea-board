@@ -17,10 +17,14 @@ router.get('/:id', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
   const dbRef = firebase.database().ref('/' + req.params.id)
-
+  const ideas = []
   dbRef.once('value').then(function(snapshot) {
     const contents = snapshot.val()
-    res.send(JSON.stringify(contents))
+    Object.entries(contents).forEach( ( [ key, value ] ) => {
+      ideas.push({[key]: value})
+    })
+
+    res.send(ideas)
   })
 })
 
@@ -29,10 +33,17 @@ router.get('/', function(req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
   const dbRef = firebase.database().ref('/')
-
   dbRef.once('value').then(function(snapshot) {
     const contents = snapshot.val()
-    res.send(JSON.stringify(contents))
+    const ideas = []
+    let values = {}
+
+    Object.entries(contents).forEach( ( [ key,  value ] ) => {
+      ideas.push(value)
+      values = Object.assign({ [key]: ideas },values)
+    })
+
+    res.send(JSON.stringify(values))
   })
 })
 

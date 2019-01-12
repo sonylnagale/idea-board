@@ -15,4 +15,5 @@ router.post('/', function(req, res, next) {
 
   res.sendStatus(200)
 })
+
 module.exports = router

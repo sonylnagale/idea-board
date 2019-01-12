@@ -51,7 +51,7 @@ router.post('/update', function(req, res, next) {
 
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + name + '/' + id)
+  const dbRef = firebase.database().ref('/' + name + '/ideas/' + id)
 
   let props = {}
 

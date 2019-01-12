@@ -10,7 +10,7 @@ router.post('/:id', function(req, res, next) {
         title = xssFilters.inHTMLData(req.body.title)
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + req.params.id  + '/')
+  const dbRef = firebase.database().ref('/' + req.params.id  + '/ideas')
 
   dbRef.push({
     description,
