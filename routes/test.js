@@ -68,4 +68,21 @@ router.post('/update', function (req, res, next) {
   res.sendStatus(200)
 })
 
+/* GET all users page. */
+router.get('/listUsers', function (req, res, next) {
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref('/')
+  dbRef.once('value').then(function (snapshot) {
+    const contents = snapshot.val()
+    const users = []
+
+    Object.entries(contents).forEach(([ key, value ]) => {
+      users.push(key)
+    })
+
+    res.send(JSON.stringify(users))
+  })
+})
+
 module.exports = router
