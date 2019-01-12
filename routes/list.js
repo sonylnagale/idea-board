@@ -19,12 +19,17 @@ router.get('/:id', function (req, res, next) {
   const dbRef = firebase.database().ref('/' + req.params.id)
   const ideas = []
   dbRef.once('value').then(function (snapshot) {
-    const contents = snapshot.val()
-    Object.entries(contents).forEach(([ key, value ]) => {
-      ideas.push({ id: key, 'description': value.description, 'title': value.title })
-    })
+    if (snapshot.exists()) {
+      const contents = snapshot.val()
+      Object.entries(contents).forEach(([ key, value ]) => {
+        ideas.push({ id: key, 'description': value.description, 'title': value.title })
+      })
 
-    res.send(ideas)
+      res.send(ideas)
+    } else {
+      res.sendStatus(404)
+    }
+
   })
 })
 
