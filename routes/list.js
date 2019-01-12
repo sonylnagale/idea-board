@@ -21,7 +21,7 @@ router.get('/:id', function(req, res, next) {
   dbRef.once('value').then(function(snapshot) {
     const contents = snapshot.val()
     Object.entries(contents).forEach( ( [ key, value ] ) => {
-      ideas.push({[key]: value})
+      ideas.push({id: key, "description": value.description, "title": value.title})
     })
 
     res.send(ideas)
@@ -39,7 +39,12 @@ router.get('/', function(req, res, next) {
     let values = {}
 
     Object.entries(contents).forEach( ( [ key,  value ] ) => {
-      ideas.push(value)
+      const userIdeas = []
+      Object.entries(value).forEach( ( [ key, value ] ) => {
+        userIdeas.push({id: key, "description": value.description, "title": value.title})
+      })
+
+      ideas.push(userIdeas)
       values = Object.assign({ [key]: ideas },values)
     })
 
