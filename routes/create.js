@@ -1,5 +1,6 @@
 const firebase = require('firebase-admin')
 const xssFilters = require('xss-filters')
+const fs = require('fs')
 
 const express = require('express')
 const router = express.Router()
@@ -25,6 +26,10 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/seed', function (req, res, next) {
+  fs.readFile('public/javascripts/seed.json', 'utf8', function (err, contents) {
+    const dbRef = firebase.database().ref('/Sonyl')
+    dbRef.set(JSON.parse  (contents))
+  })
   res.render('create', {})
 })
 
