@@ -10,16 +10,19 @@ This API backend is to simplify the [React Idea Board project](https://git.gener
 
 The API has 3 specific endpoints with permutations, and 2 in development:
 
-  1. `/list`: displays all data in the datbase.
+  1. `/list`: displays all data in the database.
     * `/list/:name`: displays all data for the { String } `name` parameter
   1. `/create`: enters information into the database of this format:
       * { String } title
       * { String } description
+      * `/create/seed`: enters test data for quickstart.
+  1. `/update/`: Updates a specific idea. `id` is POSTed.
+  1. `/delete/:id`: Deletes a specific user and all its data.
   1. `/test/create`: a basic form to test adding data to the database and see it reflected in the `/list` views.
 
 ### Listing Data
 
-The `/list` and `/list/:name` URLs will list all data (https://react-idea-board-backend.herokuapp.com/list/) or data for a specific name (https://react-idea-board-backend.herokuapp.com/list/sonyl)
+The `/list` and `/list/:name` URLs will list all data (https://react-idea-board-backend.herokuapp.com/list/) or data for a specific name (https://react-idea-board-backend.herokuapp.com/list/Sonyl)
 
 The data is presented in JSON format in both cases, using Firebase IDs:
 
@@ -43,8 +46,8 @@ Sample Listing:  https://react-idea-board-backend.herokuapp.com/list/
 
 * Create: POST https://react-idea-board-backend.herokuapp.com/create/:name
 * Read: GET  https://react-idea-board-backend.herokuapp.com/:name
-* Update: POST (@todo)
-* Delete: POST (@todo)
+* Update: PUT https://react-idea-board-backend.herokuapp.com/update/:id
+* Delete: POST https://react-idea-board-backend.herokuapp.com/
 
 ## Todo
 
