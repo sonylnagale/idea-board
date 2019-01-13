@@ -24,4 +24,8 @@ router.get('/', function (req, res, next) {
   res.render('create', {})
 })
 
+router.get('/seed', function (req, res, next) {
+  res.render('create', {})
+})
+
 module.exports = router

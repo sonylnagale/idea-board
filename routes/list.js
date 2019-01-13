@@ -58,14 +58,15 @@ router.get('/', function (req, res, next) {
     const ideas = []
     let values = {}
 
-    Object.entries(contents).forEach(([ key, value ]) => {
-      const userIdeas = []
-      Object.entries(value).forEach(([ key, value ]) => {
-        userIdeas.push({ id: key, 'description': value.description, 'title': value.title })
+    Object.entries(contents).forEach(([ userkey, uservalue ]) => {
+      const userIdeas =  []
+      Object.entries(uservalue).forEach(([ key, value ]) => {
+        Object.entries(value).forEach(([ ideaKey, ideaValue ]) => {
+          userIdeas.push({ id: ideaKey, 'description': ideaValue.description, 'title': ideaValue.title })
+        })
       })
-
       ideas.push(userIdeas)
-      values = Object.assign({ [key]: ideas }, values)
+      values = Object.assign({ [userkey]: userIdeas }, values)
     })
 
     res.send(JSON.stringify(values))
