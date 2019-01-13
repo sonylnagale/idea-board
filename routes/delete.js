@@ -16,4 +16,14 @@ router.post('/', function (req, res, next) {
   res.sendStatus(200)
 })
 
+router.post('/:name', function (req, res, next) {
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref('/')
+
+  dbRef.child(req.params.name).remove()
+
+  res.sendStatus(200)
+})
+
 module.exports = router

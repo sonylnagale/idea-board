@@ -91,3 +91,36 @@ describe('Update', () => {
     })
   })
 })
+
+describe('Delete', () => {
+  describe('/POST an idea deletion', () => {
+    it('it should DELETE an idea', (done) => {
+      chai.request(server)
+        .post('/delete')
+        .send({ name: randomID, id: ideaID })
+        .end((err, res) => {
+          chai.request(server)
+            .get(`/list/${ randomID }/ideas/${ ideaID }`)
+            .end((err, res) => {
+              res.should.have.status(404)
+              done()
+          })
+        })
+    })
+  })
+
+  describe('/POST a user deletion', () => {
+    it('it should DELETE the test user and all data', (done) => {
+      chai.request(server)
+        .post(`/delete/${ randomID }`)
+        .end((err, res) => {
+          chai.request(server)
+            .get(`/list/${ randomID }/ideas`)
+            .end((err, res) => {
+              res.should.have.status(404)
+              done()
+          })
+        })
+    })
+  })
+})
