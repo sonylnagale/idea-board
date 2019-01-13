@@ -4,15 +4,15 @@ const xssFilters = require('xss-filters')
 const express = require('express')
 const router = express.Router()
 
-router.post('/', function (req, res, next) {
+router.put('/:user/ideas/:idea', function (req, res, next) {
   const description = xssFilters.inHTMLData(req.body.description)
   const title = xssFilters.inHTMLData(req.body.title)
-  const name = xssFilters.inHTMLData(req.body.name)
-  const id = xssFilters.inHTMLData(req.body.id)
+  const user = req.params.user
+  const idea = req.params.idea
 
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + name + '/s' + id)
+  const dbRef = firebase.database().ref(`/${ user }/ideas/${ idea }`)
 
   let props = {}
 
@@ -25,8 +25,8 @@ router.post('/', function (req, res, next) {
   }
 
   dbRef.update(props)
-
   res.sendStatus(200)
+
 })
 
 router.get('/', function (req, res, next) {

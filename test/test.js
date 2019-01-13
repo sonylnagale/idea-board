@@ -1,11 +1,15 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const server = require('../app')
+// const server = require('../app')
 const should = chai.should()
+
+
+const server = 'http://localhost:3000'
 
 chai.use(chaiHttp)
 
 let randomID = 'chaitest' + Math.round(Math.random() * 1000000)
+let ideaID
 
 describe('Create', () => {
   describe('/POST create an idea', () => {
@@ -18,6 +22,7 @@ describe('Create', () => {
             .get(`/list/${ randomID }`)
             .end((err, res) => {
               res.body[0].description.should.equal('test_description_' + randomID)
+              ideaID = res.body[0].id
               done()
           })
         })
@@ -62,6 +67,24 @@ describe('List', () => {
           chai.request(server)
             .get(`/list/${ usernames[0] }`)
             .end((err, res) => {
+              done()
+          })
+        })
+    })
+  })
+})
+
+describe('Update', () => {
+  describe('/PUT an update', () => {
+    it('it should UPDATE a field', (done) => {
+      chai.request(server)
+        .put(`/update/${ randomID }/ideas/${ ideaID }`)
+        .send({ description: `new_description_${ randomID}`, title: `new_title_${ randomID }`, id: ideaID })
+        .end((err, res) => {
+          chai.request(server)
+            .get(`/list/${ randomID }/ideas/${ ideaID }`)
+            .end((err, res) => {
+              res.body.description.should.equal('new_description_' + randomID)
               done()
           })
         })
