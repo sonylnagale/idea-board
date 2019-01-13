@@ -58,8 +58,9 @@ Sample Listing:  `https://react-idea-board-backend.herokuapp.com/list/``
         1. `{ String } title`
         1. `{ String } description`
 * Delete: `POST https://react-idea-board-backend.herokuapp.com/delete`
-    *  POST Parameter
+    *  POST Parameters
         1. `{ String } id` Firebase ID of the idea
+        1. `{ String } username`
 
 ## Technologies
 
