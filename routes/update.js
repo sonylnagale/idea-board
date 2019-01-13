@@ -5,8 +5,8 @@ const express = require('express')
 const router = express.Router()
 
 router.put('/:user/ideas/:idea', function (req, res, next) {
-  const description = xssFilters.inHTMLData(req.body.description)
-  const title = xssFilters.inHTMLData(req.body.title)
+  const description = req.body.description
+  const title = req.body.title
   const user = req.params.user
   const idea = req.params.idea
 
