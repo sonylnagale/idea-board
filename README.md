@@ -8,7 +8,7 @@ Release: 0.0.0
 
 This API backend is to simplify the [React Idea Board project](https://git.generalassemb.ly/react-development/idea-board) for the React Part-time course.
 
-The API has 4 specific endpoints with permutations and test pages.
+The API has 4 specific endpoints with permutations:
 
   1. `/list`: displays all data in the database.
       * `/list/:name`: displays all data for the { String } `name` parameter
@@ -18,7 +18,6 @@ The API has 4 specific endpoints with permutations and test pages.
       * `/create/seed`: enters test data for quickstart.
   1. `/update/`: Updates a specific idea. `id` is POSTed.
   1. `/delete/:id`: Deletes a specific user and all its data.
-  1. `/test/create`: a basic form to test adding data to the database and see it reflected in the `/list` views.
 
 ### Listing Data
 
