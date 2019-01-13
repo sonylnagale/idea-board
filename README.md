@@ -41,7 +41,7 @@ The API only has rudimentary sanitization, so please discourage students from tr
 
 ## Stood-up URLs to Distribute to Students
 
-Sample Listing:  `https://react-idea-board-backend.herokuapp.com/list/``
+Sample Listing:  `https://react-idea-board-backend.herokuapp.com/list/`
 
 * Create: `POST https://react-idea-board-backend.herokuapp.com/create/:name`
     * POST Parameters:
