@@ -49,10 +49,6 @@ Sample Listing:  https://react-idea-board-backend.herokuapp.com/list/
 * Update: PUT https://react-idea-board-backend.herokuapp.com/update/:id
 * Delete: POST https://react-idea-board-backend.herokuapp.com/
 
-## Todo
-
-Endpoints for Update and Delete
-
 ## Technologies
 
 * Node.js
