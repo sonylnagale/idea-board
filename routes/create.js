@@ -29,7 +29,7 @@ router.get('/seed', function (req, res, next) {
     const dbRef = firebase.database().ref('/Sonyl')
     dbRef.set(JSON.parse  (contents))
   })
-  res.render('create', {})
+  res.render('seed', {})
 })
 
 module.exports = router
