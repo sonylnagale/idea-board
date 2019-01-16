@@ -12,7 +12,7 @@ const createRouter = require('./routes/create')
 const testRouter = require('./routes/test')
 const deleteRouter = require('./routes/delete')
 const updateRouter = require('./routes/update')
-const usersRouter = require('./routes/users')
+const userRouter = require('./routes/user')
 
 const app = express()
 
@@ -32,7 +32,7 @@ app.use('/create', createRouter)
 app.use('/test', testRouter)
 app.use('/delete', deleteRouter)
 app.use('/update', updateRouter)
-app.use('/users', usersRouter)
+app.use('/user', userRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

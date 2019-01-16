@@ -19,7 +19,7 @@ describe('Create', () => {
         .send({ description: 'test_description_' + randomID, title: 'test_title_' + randomID })
         .end((err, res) => {
           chai.request(server)
-            .get(`/list/${ randomID }`)
+            .get(`/user/${ randomID }`)
             .end((err, res) => {
               res.body[0].description.should.equal('test_description_' + randomID)
               ideaID = res.body[0].id
@@ -49,7 +49,7 @@ describe('List', () => {
       let undefinedID = 'chaitest' + Math.round(Math.random() * 1000000)
 
       chai.request(server)
-        .get(`/list/${ undefinedID }`)
+        .get(`/user/${ undefinedID }`)
         .end((err, res) => {
           res.should.have.status(404)
           done()
@@ -65,7 +65,7 @@ describe('List', () => {
         .end((err, res) => {
           usernames = res.body
           chai.request(server)
-            .get(`/list/${ usernames[0] }`)
+            .get(`/user/${ usernames[0] }`)
             .end((err, res) => {
               done()
           })
@@ -76,7 +76,7 @@ describe('List', () => {
   describe('/GET an array of user data', () => {
     it('it should GET an array of all users', (done) => {
       chai.request(server)
-        .get('/users')
+        .get('/user/all')
         .end((err, res) => {
           usernames = res.body
           usernames.should.be.an('array').that.includes(randomID)

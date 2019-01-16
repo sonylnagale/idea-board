@@ -12,27 +12,6 @@ firebase.initializeApp({
   databaseURL: 'https://idea-board-bd745.firebaseio.com'
 })
 
-/* GET individual's page. */
-router.get('/:id', function (req, res, next) {
-  res.setHeader('Content-Type', 'application/json')
-
-  const dbRef = firebase.database().ref('/' + req.params.id)
-  const ideas = []
-  dbRef.once('value').then(function (snapshot) {
-    if (snapshot.exists()) {
-      const contents = snapshot.val()
-      Object.entries(contents.ideas).forEach(([ key, value ]) => {
-        ideas.push({ id: key, 'description': value.description, 'title': value.title })
-      })
-
-      res.send(ideas)
-    } else {
-      res.sendStatus(404)
-    }
-
-  })
-})
-
 /* GET idea. */
 router.get('/:id/ideas/:idea', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
