@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
 router.get('/seed', function (req, res, next) {
   fs.readFile('public/javascripts/seed.json', 'utf8', function (err, contents) {
     const dbRef = firebase.database().ref('/Sonyl')
-    dbRef.set(JSON.parse  (contents))
+    dbRef.set(JSON.parse(contents))
   })
   res.render('seed', {})
 })
