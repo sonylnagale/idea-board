@@ -47,7 +47,8 @@ Sample Listing:  `https://react-idea-board-backend.herokuapp.com/list/`
     * POST Parameters:
         1. `{ String } description`
         1. `{ String } title`
-* Read: `GET  https://react-idea-board-backend.herokuapp.com/list/:name`
+* Read: `GET `
+* Read: `GET https://react-idea-board-backend.herokuapp.com/users/`
     * GET Parameter
         1. `{ String } username` within the URL, _e.g._ `https://react-idea-board-backend.herokuapp.com/list/Sonyl`
 * Update: `PUT https://react-idea-board-backend.herokuapp.com/update/:name/ideas/:id`
