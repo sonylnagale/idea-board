@@ -72,6 +72,18 @@ describe('List', () => {
         })
     })
   })
+
+  describe('/GET an array of user data', () => {
+    it('it should GET an array of all users', (done) => {
+      chai.request(server)
+        .get('/users')
+        .end((err, res) => {
+          usernames = res.body
+          usernames.should.be.an('array').that.includes(randomID)
+          done()
+        })
+    })
+  })
 })
 
 describe('Update', () => {
