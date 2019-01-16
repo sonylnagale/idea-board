@@ -48,23 +48,6 @@ describe('Test users', () => {
         })
     })
   })
-
-  // describe('/POST create an idea', () => {
-  //   it('it should successfully create an idea', (done) => {
-  //     chai.request(server)
-  //       .post('/create/' + randomID)
-  //       .send({ description: 'test_description_' + randomID, title: 'test_title_' + randomID })
-  //       .end((err, res) => {
-  //         chai.request(server)
-  //           .get(`/user/${ randomID }`)
-  //           .end((err, res) => {
-  //             res.body[0].description.should.equal('test_description_' + randomID)
-  //             ideaID = res.body[0].id
-  //             done()
-  //         })
-  //       })
-  //   })
-  // })
 })
 
 describe('List', () => {
@@ -103,14 +86,6 @@ describe('List', () => {
           done()
         })
     })
-    it('it should GET an array of all users', (done) => {
-      chai.request(server)
-        .get('/user/all')
-        .end((err, res) => {
-          expect(res.body).is.an('array').that.includes(randomID)
-          done()
-        })
-    })
   })
 })
 
@@ -122,7 +97,7 @@ describe('Update', () => {
         .send({ description: `new_description_${ randomID}`, title: `new_title_${ randomID }`, id: ideaID })
         .end((err, res) => {
           chai.request(server)
-            .get(`/list/${ randomID }/ideas/${ ideaID }`)
+            .get(`/user/${ randomID }/ideas/${ ideaID }`)
             .end((err, res) => {
               expect(res.body.description).to.equal('new_description_' + randomID)
               done()
@@ -140,7 +115,7 @@ describe('Delete', () => {
         .send({ name: randomID, id: ideaID })
         .end((err, res) => {
           chai.request(server)
-            .get(`/list/${ randomID }/ideas/${ ideaID }`)
+            .get(`/user/${ randomID }/ideas/${ ideaID }`)
             .end((err, res) => {
               expect(res).to.have.status(404)
               done()
@@ -149,18 +124,19 @@ describe('Delete', () => {
     })
   })
 
-  // describe('/POST a user deletion', () => {
-  //   it('it should DELETE the test user and all data', (done) => {
-  //     chai.request(server)
-  //       .post(`/delete/${ randomID }`)
-  //       .end((err, res) => {
-  //         chai.request(server)
-  //           .get(`/list/${ randomID }/ideas`)
-  //           .end((err, res) => {
-  //             res.should.have.status(404)
-  //             done()
-  //         })
-  //       })
-  //   })
-  // })
+  describe('/POST a user deletion', () => {
+    it('it should DELETE the test user and all data', (done) => {
+      chai.request(server)
+        .post(`/delete/${ randomID }`)
+        .end((err, res) => {
+          expect(res).to.have.status(200)
+          chai.request(server)
+            .get(`/user/${ randomID }/ideas`)
+            .end((err, res) => {
+              expect(res).to.have.status(404)
+              done()
+          })
+        })
+    })
+  })
 })

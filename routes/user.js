@@ -70,4 +70,19 @@ router.post('/', function (req, res, next) {
   })
 })
 
+/* GET idea. */
+router.get('/:id/ideas/:idea', function (req, res, next) {
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref('/' + req.params.id + '/ideas/' + req.params.idea)
+  const ideas = []
+  dbRef.once('value').then(function (snapshot) {
+    if (snapshot.exists()) {
+      res.send(snapshot)
+    } else {
+      res.sendStatus(404)
+    }
+  })
+})
+
 module.exports = router
