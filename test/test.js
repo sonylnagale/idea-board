@@ -1,7 +1,6 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-// const server = require('../app')
-const should = chai.should()
+const expect = chai.expect;
 
 
 const server = 'http://localhost:3000'
@@ -11,23 +10,61 @@ chai.use(chaiHttp)
 let randomID = 'chaitest' + Math.round(Math.random() * 1000000)
 let ideaID
 
-describe('Create', () => {
-  describe('/POST create an idea', () => {
-    it('it should successfully create a user and idea', (done) => {
+describe('Test users', () => {
+  describe('/POST create a user and get user info', () => {
+    it('it should successfully create a user', (done) => {
       chai.request(server)
-        .post('/create/' + randomID)
-        .send({ description: 'test_description_' + randomID, title: 'test_title_' + randomID })
+        .post('/user/')
+        .send({ userName: randomID })
         .end((err, res) => {
           chai.request(server)
             .get(`/user/${ randomID }`)
             .end((err, res) => {
-              res.body[0].description.should.equal('test_description_' + randomID)
-              ideaID = res.body[0].id
+              expect(res.body.userName).to.equal(randomID)
               done()
+            })
+        })
+    })
+    describe('/POST a new idea',  () => {
+      it('it should successfully create an idea', (done) => {
+        chai.request(server)
+          .post(`/create/${ randomID }`)
+          .send({ description: 'test description', title: 'test title'})
+          .end((err, res) => {
+            done()
           })
+      })
+    })
+  })
+
+  describe('/GET a specific user\'s data', () => {
+    it('it should GET one user\'s ideas', (done) => {
+      chai.request(server)
+        .get(`/user/${ randomID }/ideas/`)
+        .end((err, res) => {
+          expect(res.body[0].value.description).to.equal('test description')
+          expect(res.body[0].value.title).to.equal('test title')
+          done()
         })
     })
   })
+
+  // describe('/POST create an idea', () => {
+  //   it('it should successfully create an idea', (done) => {
+  //     chai.request(server)
+  //       .post('/create/' + randomID)
+  //       .send({ description: 'test_description_' + randomID, title: 'test_title_' + randomID })
+  //       .end((err, res) => {
+  //         chai.request(server)
+  //           .get(`/user/${ randomID }`)
+  //           .end((err, res) => {
+  //             res.body[0].description.should.equal('test_description_' + randomID)
+  //             ideaID = res.body[0].id
+  //             done()
+  //         })
+  //       })
+  //   })
+  // })
 })
 
 describe('List', () => {
@@ -36,9 +73,9 @@ describe('List', () => {
       chai.request(server)
         .get('/list')
         .end((err, res) => {
-          res.should.have.status(200)
-          res.body.should.be.a('object')
-          JSON.stringify(res.body).should.have.lengthOf.above(2)
+          expect(res).has.status(200)
+          expect(res.body).is.a('object')
+          expect(JSON.stringify(res.body)).has.lengthOf.above(2)
           done()
         })
     })
@@ -51,25 +88,9 @@ describe('List', () => {
       chai.request(server)
         .get(`/user/${ undefinedID }`)
         .end((err, res) => {
-          res.should.have.status(404)
+          expect(res).has.status(404)
           done()
       })
-    })
-  })
-
-  describe('/GET a specific user\'s data', () => {
-    let usernames
-    it('it should GET one user\'s ideas', (done) => {
-      chai.request(server)
-        .get('/test/listUsers')
-        .end((err, res) => {
-          usernames = res.body
-          chai.request(server)
-            .get(`/user/${ usernames[0] }`)
-            .end((err, res) => {
-              done()
-          })
-        })
     })
   })
 
@@ -78,8 +99,15 @@ describe('List', () => {
       chai.request(server)
         .get('/user/all')
         .end((err, res) => {
-          usernames = res.body
-          usernames.should.be.an('array').that.includes(randomID)
+          expect(res.body).is.an('array').that.includes(randomID)
+          done()
+        })
+    })
+    it('it should GET an array of all users', (done) => {
+      chai.request(server)
+        .get('/user/all')
+        .end((err, res) => {
+          expect(res.body).is.an('array').that.includes(randomID)
           done()
         })
     })
@@ -96,7 +124,7 @@ describe('Update', () => {
           chai.request(server)
             .get(`/list/${ randomID }/ideas/${ ideaID }`)
             .end((err, res) => {
-              res.body.description.should.equal('new_description_' + randomID)
+              expect(res.body.description).to.equal('new_description_' + randomID)
               done()
           })
         })
@@ -114,25 +142,25 @@ describe('Delete', () => {
           chai.request(server)
             .get(`/list/${ randomID }/ideas/${ ideaID }`)
             .end((err, res) => {
-              res.should.have.status(404)
+              expect(res).to.have.status(404)
               done()
           })
         })
     })
   })
 
-  describe('/POST a user deletion', () => {
-    it('it should DELETE the test user and all data', (done) => {
-      chai.request(server)
-        .post(`/delete/${ randomID }`)
-        .end((err, res) => {
-          chai.request(server)
-            .get(`/list/${ randomID }/ideas`)
-            .end((err, res) => {
-              res.should.have.status(404)
-              done()
-          })
-        })
-    })
-  })
+  // describe('/POST a user deletion', () => {
+  //   it('it should DELETE the test user and all data', (done) => {
+  //     chai.request(server)
+  //       .post(`/delete/${ randomID }`)
+  //       .end((err, res) => {
+  //         chai.request(server)
+  //           .get(`/list/${ randomID }/ideas`)
+  //           .end((err, res) => {
+  //             res.should.have.status(404)
+  //             done()
+  //         })
+  //       })
+  //   })
+  // })
 })

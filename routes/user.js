@@ -19,24 +19,54 @@ router.get('/all', function (req, res, next) {
   })
 })
 
-/* GET individual's page. */
 router.get('/:id', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
-  const dbRef = firebase.database().ref('/' + req.params.id)
-  const ideas = []
+  const dbRef = firebase.database().ref(`/${ req.params.id }`)
   dbRef.once('value').then(function (snapshot) {
     if (snapshot.exists()) {
-      const contents = snapshot.val()
-      Object.entries(contents.ideas).forEach(([ key, value ]) => {
-        ideas.push({ id: key, 'description': value.description, 'title': value.title })
-      })
-
-      res.send(ideas)
+      res.send(snapshot.val())
     } else {
       res.sendStatus(404)
     }
+  })
+})
 
+router.get('/:id/ideas', function (req, res, next) {
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref(`/${ req.params.id }`)
+  dbRef.once('value').then(function (snapshot) {
+    if (snapshot.exists()) {
+
+      const ideas = []
+
+      Object.entries(snapshot.val().ideas).forEach(([ key, value ]) => {
+        ideas.push( { key, value } )
+      })
+
+      res.send(JSON.stringify(ideas))
+    } else {
+      res.sendStatus(404)
+    }
+  })
+})
+
+router.post('/', function (req, res, next) {
+  const userName = req.body.userName
+
+  res.setHeader('Content-Type', 'application/json')
+
+  const dbRef = firebase.database().ref('/')
+
+  dbRef.push({}).then((response) => {
+    const id = response.key
+    firebase.database().ref(userName).set({
+      id,
+      userName,
+      ideas: []
+    })
+    res.sendStatus(200)
   })
 })
 

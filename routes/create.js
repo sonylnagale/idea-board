@@ -5,7 +5,6 @@ const fs = require('fs')
 const express = require('express')
 const router = express.Router()
 
-/* GET individual page. */
 router.post('/:id', function (req, res, next) {
   const description = xssFilters.inHTMLData(req.body.description)
   const title = xssFilters.inHTMLData(req.body.title)
