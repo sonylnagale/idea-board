@@ -28,7 +28,7 @@ router.post('/', function (req, res, next) {
 
           res.send(JSON.stringify(ideas))
         } else {
-          res.sendStatus(404)
+          res.send(JSON.stringify([]))
         }
       })
     })
