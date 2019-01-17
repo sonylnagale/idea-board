@@ -7,7 +7,7 @@ const server = 'http://localhost:3000'
 
 chai.use(chaiHttp)
 
-let randomID = 'chaitest' + Math.round(Math.random() * 1000000)
+const randomID = 'chaitest' + Math.round(Math.random() * 1000000)
 let ideaID
 
 describe('Test users', () => {
@@ -31,6 +31,7 @@ describe('Test users', () => {
           .post(`/create/${ randomID }`)
           .send({ description: 'test description', title: 'test title'})
           .end((err, res) => {
+            expect(res.body.key).to.be.a('string')
             done()
           })
       })

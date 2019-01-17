@@ -15,9 +15,10 @@ router.post('/:id', function (req, res, next) {
   dbRef.push({
     description,
     title
+  }).then((snapshot) => {
+    console.log(snapshot.key)
+    res.send(JSON.stringify({key: snapshot.key}))
   })
-
-  res.sendStatus(200)
 })
 
 router.get('/', function (req, res, next) {
