@@ -4,6 +4,7 @@ const xssFilters = require('xss-filters')
 const express = require('express')
 const router = express.Router()
 
+/** DELETE an idea */
 router.post('/', function (req, res, next) {
   const id = xssFilters.inHTMLData(req.body.id)
   const name = xssFilters.inHTMLData(req.body.name)
@@ -16,6 +17,7 @@ router.post('/', function (req, res, next) {
   res.sendStatus(200)
 })
 
+/** DELETE a user */
 router.post('/:name', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 

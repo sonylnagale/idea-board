@@ -3,6 +3,7 @@ const firebase = require('firebase-admin')
 const express = require('express')
 const router = express.Router()
 
+/**  GET all users */
 router.get('/all', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
@@ -19,6 +20,7 @@ router.get('/all', function (req, res, next) {
   })
 })
 
+/** GET one user */
 router.get('/:id', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
@@ -32,6 +34,7 @@ router.get('/:id', function (req, res, next) {
   })
 })
 
+/**  GET one user's ideas */
 router.get('/:id/ideas', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
@@ -52,6 +55,7 @@ router.get('/:id/ideas', function (req, res, next) {
   })
 })
 
+/** CREATE new user */
 router.post('/', function (req, res, next) {
   const userName = req.body.userName
 
@@ -70,7 +74,7 @@ router.post('/', function (req, res, next) {
   })
 })
 
-/* GET idea. */
+/** GET idea. */
 router.get('/:id/ideas/:idea', function (req, res, next) {
   res.setHeader('Content-Type', 'application/json')
 
