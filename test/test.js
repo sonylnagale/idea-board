@@ -114,6 +114,7 @@ describe('Delete', () => {
         .post('/delete')
         .send({ name: randomID, id: ideaID })
         .end((err, res) => {
+          expect(res.body).to.be.an('array')
           chai.request(server)
             .get(`/user/${ randomID }/ideas/${ ideaID }`)
             .end((err, res) => {

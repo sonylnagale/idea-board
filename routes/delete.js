@@ -12,9 +12,25 @@ router.post('/', function (req, res, next) {
 
   const dbRef = firebase.database().ref('/' + name + '/ideas/')
 
-  dbRef.child(id).remove()
+  dbRef.child(id).remove(() => {
+    res.setHeader('Content-Type', 'application/json')
 
-  res.sendStatus(200)
+    const dbRef = firebase.database().ref(`/${ name }`)
+    dbRef.once('value').then(function (snapshot) {
+      if (snapshot.exists()) {
+
+        const ideas = []
+
+        Object.entries(snapshot.val().ideas).forEach(([ key, value ]) => {
+          ideas.push( { key, value } )
+        })
+
+        res.send(JSON.stringify(ideas))
+      } else {
+        res.sendStatus(404)
+      }
+    })
+  })
 })
 
 /** DELETE a user */
