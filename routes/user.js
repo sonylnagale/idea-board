@@ -70,7 +70,17 @@ router.post('/', function (req, res, next) {
       userName,
       ideas: []
     })
-    res.sendStatus(200)
+
+    dbRef.once('value').then(function (snapshot) {
+      const contents = snapshot.val()
+      const users = []
+
+      Object.entries(contents).forEach(([ key, value ]) => {
+        users.push(key)
+      })
+
+      res.send(JSON.stringify(users))
+    })
   })
 })
 
