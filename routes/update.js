@@ -25,8 +25,24 @@ router.put('/:user/ideas/:idea', function (req, res, next) {
   }
 
   dbRef.update(props)
-  res.sendStatus(200)
+  .then(() => {
+    res.setHeader('Content-Type', 'application/json')
+    const ideasRef = firebase.database().ref(`/${ user }/ideas/`)
 
+    ideasRef.once('value').then(function (snapshot) {
+      if (snapshot.exists()) {
+        const ideas = []
+
+        Object.entries(snapshot.val()).forEach(([ key, value ]) => {
+          ideas.push( { key, value } )
+        })
+
+        res.send(JSON.stringify(ideas))
+      } else {
+        res.send(JSON.stringify([]))
+      }
+    })
+  })
 })
 
 router.get('/', function (req, res, next) {
